@@ -6,14 +6,20 @@
 #include <QtGlobal>
 #include <QVector>
 
-class sysinfolinuximpl : public SysInfo
+class SysInfoLinuxImpl : public SysInfo
 {
 public:
-    sysinfolinuximpl();
+    SysInfoLinuxImpl();
 
     void init() override;
     double cpuLoadAverage() override;
     double memoryUsed() override;
+
+private:
+    QVector<qulonglong> cpuRawData();
+
+private:
+    QVector<qulonglong> mCpuLoadLastValues;
 };
 
 #endif // SYSINFOLINUXIMPL_H

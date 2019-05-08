@@ -27,17 +27,22 @@ CONFIG += c++14
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        sysinfo.cpp \
-        sysinfolinuximpl.cpp
+        sysinfo.cpp
+
 
 HEADERS += \
         mainwindow.h \
-        sysinfo.h \ \
-    sysinfolinuximpl.h
+        sysinfo.h
+
 
 windows {
     SOURCES += sysinfowindowsimpl.cpp
     HEADERS += sysinfowindowsimpl.h
+}
+
+linux {
+    SOURCES += sysinfolinuximpl.cpp
+    HEADERS += sysinfolinuximpl.h
 }
 
 FORMS += \

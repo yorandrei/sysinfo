@@ -1,14 +1,17 @@
 #include "sysinfolinuximpl.h"
+#include <QFile>
 
 #include <sys/types.h>
 #include <sys/sysinfo.h>
 
-sysinfolinuximpl::sysinfolinuximpl() :
-    SysInfo()
+SysInfoLinuxImpl::SysInfoLinuxImpl() :
+    SysInfo(),
+    mCpuLoadLastValues()
 {
+
 }
 
-double sysinfolinuximpl::memoryUsed()
+double SysInfoLinuxImpl::memoryUsed()
 {
     struct sysinfo memInfo;
     sysinfo(&memInfo);
@@ -22,5 +25,46 @@ double sysinfolinuximpl::memoryUsed()
     totalMemoryUsed *= memInfo.mem_unit;
 
     double percent = (double) totalMemoryUsed / (double) totalMemory * 100.0;
+    return qBound(0.0, percent, 100.0);
+}
+
+void SysInfoLinuxImpl::init()
+{
+    mCpuLoadLastValues = cpuRawData();
+}
+
+QVector<qulonglong> SysInfoLinuxImpl::cpuRawData()
+{
+    QFile file("/proc/stat");
+    file.open(QIODevice::ReadOnly);
+
+    QByteArray line = file.readLine();
+    file.close();
+    qulonglong totalUser = 0, totalUserNice = 0,
+            totalSystem = 0, totalIdle = 0;
+    std::sscanf(line.data(), "cpu %llu, %llu %llu %llu",
+                &totalUser, &totalUserNice, &totalSystem, &totalIdle);
+
+    QVector<qulonglong> rawData;
+    rawData.append(totalUser);
+    rawData.append(totalUserNice);
+    rawData.append(totalSystem);
+    rawData.append(totalIdle);
+
+    return rawData;
+}
+
+double SysInfoLinuxImpl::cpuLoadAverage()
+{
+    QVector<qulonglong> firstSample = mCpuLoadLastValues;
+    QVector<qulonglong> secondSample = cpuRawData();
+    mCpuLoadLastValues = secondSample;
+
+    double overall = (secondSample[0] - firstSample[0])
+            + (secondSample[1] - firstSample[1])
+            + (secondSample[2] - firstSample[2]);
+
+    double total = overall + (secondSample[3] - firstSample[3]);
+    double percent = (overall / total) * 100.0;
     return qBound(0.0, percent, 100.0);
 }
