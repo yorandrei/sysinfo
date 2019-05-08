@@ -25,14 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++14
 
 SOURCES += \
+        cpuwidget.cpp \
         main.cpp \
         mainwindow.cpp \
-        sysinfo.cpp
+        sysinfo.cpp \
+        sysinfowidget.cpp
 
 
 HEADERS += \
+        cpuwidget.h \
         mainwindow.h \
-        sysinfo.h
+        sysinfo.h \
+        sysinfowidget.h
 
 
 windows {
