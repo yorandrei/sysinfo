@@ -27,11 +27,18 @@ CONFIG += c++14
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        sysinfo.cpp
+        sysinfo.cpp \
+        sysinfolinuximpl.cpp
 
 HEADERS += \
         mainwindow.h \
-        sysinfo.h
+        sysinfo.h \ \
+    sysinfolinuximpl.h
+
+windows {
+    SOURCES += sysinfowindowsimpl.cpp
+    HEADERS += sysinfowindowsimpl.h
+}
 
 FORMS += \
         mainwindow.ui
