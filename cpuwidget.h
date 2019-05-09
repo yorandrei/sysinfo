@@ -6,7 +6,7 @@
 
 class CpuWidget : public SysInfoWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     explicit CpuWidget(QWidget* parent = nullptr);
 

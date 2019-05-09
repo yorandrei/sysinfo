@@ -5,7 +5,6 @@
 class SysInfo
 {
 public:
-public:
     static SysInfo& instance();
     virtual ~SysInfo();
 
