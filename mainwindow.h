@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "cpuwidget.h"
+//#include <QLayout>
 
 namespace Ui {
 class MainWindow;
