@@ -28,6 +28,7 @@ SOURCES += \
         cpuwidget.cpp \
         main.cpp \
         mainwindow.cpp \
+        memorywidget.cpp \
         sysinfo.cpp \
         sysinfowidget.cpp
 
@@ -35,6 +36,7 @@ SOURCES += \
 HEADERS += \
         cpuwidget.h \
         mainwindow.h \
+        memorywidget.h \
         sysinfo.h \
         sysinfowidget.h
 
